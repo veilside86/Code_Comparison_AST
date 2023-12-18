@@ -50,6 +50,8 @@ class wavied(analyzeNode):
               ast.unparse(node.orelse))
 
 
+# method: sort the tree then compare the string with edit distance
+
 def compare_nodes(ast_a: AST, ast_b: AST, num: int) -> int:
     children_a = list(ast.iter_child_nodes(ast_a))
     children_b = list(ast.iter_child_nodes(ast_b))
@@ -118,8 +120,7 @@ def compare_trees(tree1, tree2):
     return score
 
 def calculate_similarity_percentage(tree1, tree2):
-    print(count_nodes(tree1))
-    total_nodes = count_nodes(tree1)
+    total_nodes = count_nodes(tree1) + count_nodes(tree2)
     print('Total nodes:', total_nodes)
     
     matching_nodes = compare_trees(tree1, tree2)
@@ -138,8 +139,8 @@ def main():
     # compare_file2 = "/Users/trollcarrier/Desktop/GitHub/python-ast-comparison/structeq-subset-p2.py"
 
     # for the
-    compare_file1 = "structeq-subset-p1.py"
-    compare_file2 = "structeq-subset-p2.py"
+    compare_file1 = "source1.py"
+    compare_file2 = "source2.py"
     # compare_file2 = "x1.py"
 
 
