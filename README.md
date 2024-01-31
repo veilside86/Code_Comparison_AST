@@ -21,4 +21,5 @@ pip3 install -r requirements.txt
 + [AST](https://docs.python.org/3/library/ast.html#module-ast)
   - [Pyastism](https://github.com/jncraton/pyastsim)
   - [Comparing Python Programs Using Abstract Syntax Trees](https://repositorio.uniandes.edu.co/bitstream/handle/1992/44754/u830947.pdf?sequence=1)
+  - [Levenshtein Module](https://rapidfuzz.github.io/Levenshtein/levenshtein.html#distance)
 + [Edit distance algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance)
