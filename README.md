@@ -12,9 +12,9 @@ pip3 install -r requirements.txt
 ```
 
 ## To-Do List
-1. [ ] Apply the sorting algorithm to sort the trees to compare step by step
-2. [ ] Set up edit distance (Levenshtein distance) to compare the string and calculate similarity
-3. [ ] K-means Clustering
+1. [x] Apply the sorting algorithm to sort the trees to compare step by step
+2. [x] Set up edit distance (Levenshtein distance) to compare the string and calculate similarity
+3. [x] K-means Clustering
 4. [ ] CUDA
 
 ## Documentation
