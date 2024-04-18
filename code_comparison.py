@@ -1,6 +1,13 @@
+import ast_fuzzy_comparison as afc
+import os
+import sys
 import ast
+import random
 from _ast import *
 from Levenshtein import ratio
+
+import matplotlib.pyplot as plt
+import mplcursors
 
 class NormIdentifiers(ast.NodeTransformer):
     def __init__(self):
@@ -42,60 +49,121 @@ class NormFunctions(ast.NodeTransformer):
         
         return ast.copy_location(new_func, node)
 
-# check the field of ast nodes
 def field_check(tree: AST) -> list:
-    subtree = []
+    tree = NormFunctions(func=None).visit(tree)
+    tree = NormIdentifiers().visit(tree)
+    
+    return tree
 
-    for node in ast.walk(tree):
-        if(isinstance(node, Import) or isinstance(node, FunctionDef) or 
-        isinstance(node, While) or isinstance(node, For) or 
-        isinstance(node, comprehension) or isinstance(node, Return)):
-            subtree.append(node)
 
-    return subtree
-
-# method: sort the tree then compare the string with edit distance
-def calculate_similarity_percentage(tree_a: AST, tree_b: AST) -> float:
+def compare_subtree(subtree_list1: list, subtree_list2: list):
     score = 0
-    node_a = ast.unparse(tree_a)
-    node_b = ast.unparse(tree_b)
+    node_a = ast.unparse(subtree_list1)
+    node_b = ast.unparse(subtree_list2)
 
     score += ratio(node_a, node_b)
+
+    return round(score, 4)
+
+
+def compare_multiple_files(base: list, programs: list) -> list:
+    try:
+        tree_list = list(map(lambda prog: field_check(ast.parse(prog)), programs))
+        base = list(map(lambda prog: field_check(ast.parse(prog)), base))
+    except:
+        print("***Make sure your code is running properly***")
+        # reindent
+        sys.exit()
+
+    result = []
+    for program_tree_num in range(0, len(tree_list)):
+        subtrees1 = base
+        subtrees2 = tree_list[program_tree_num]
+
+        similarity = calculate_similarity_percentage(subtrees1, subtrees2)
+        result.append(similarity * 100)
+            
+    return result
+
+
+def calculate_similarity_percentage(tree_a: AST, tree_b: AST) -> float:
+    return compare_subtree(tree_a, tree_b)
+
+
+def show_plot(x, y, file_names, base_file_name):
+    data = zip(x, y, file_names)
     
-    return score
+    plt.xlim(0, 105)
+    plt.ylim(0, 105)
+    plt.title('Two AST Similarity')
+    plt.xlabel("Similarity of Edit Distance Algorithm")
+    plt.ylabel("Similarity of Munkres Algorithm")
+    plt.gcf().text(0.02, 0.95, 'base file: {}'.format(base_file_name), fontsize=14)
+
+    for x_val, y_val, file_names in data:
+            if x_val >= 70 and y_val >= 70:
+                plt.scatter(x_val, y_val, s=50, c='#FF0000', marker="X", label = "70 < x")
+                plt.annotate(file_names, (x_val, y_val))
+            elif x_val <= 40 and y_val <= 40:
+                plt.scatter(x_val, y_val, c='#0000FF', marker="o", label = "x < 40")
+            else:
+                plt.scatter(x_val, y_val, c='#008000', marker="o", label = "40 < x < 70")
+            
+    plt.show()
+
 
 def main():
     """
     Set up the path of the two files to compare
     """
     # For the mac
-    # compare_file1 = "/Users/trollcarrier/Desktop/GitHub/python-ast-comparison/structeq-subset-p1.py"
-    # compare_file2 = "/Users/trollcarrier/Desktop/GitHub/python-ast-comparison/structeq-subset-p2.py"
+    # compare_file1 = "JunseokSampleData/fizzbuzz1.py"
+    # compare_file2 = "JunseokSampleData/fizzbuzz2.py"
 
     # for the Window
-    compare_file1 = "source1.py"
-    compare_file2 = "source2.py"
+    # compare_file1 = "source1.py"
+    # compare_file2 = "source2.py"
+    # comp1 = "JunseokSampleData/fizzbuzz1.py"
+    # comp2 = "JunseokSampleData/fizzbuzz2.py"
+    
+    # for the multiple files
+    path = 'Samples'
+    files = []
+    for file in os.listdir(path):
+        if file.endswith('.py'):
+            files.append(file)
 
-    with open(compare_file1, "r") as source:
-        codes = source.read()
-        # ast.parse give module object name
-        tree1 = ast.parse(codes, mode="exec")
+    # need to get rid of the base filename from the list to prevent comparing duplicate
+    base_file_name = random.choice(files)
+    files.remove(base_file_name)
+    
+    programs = []
+    for file in files:
+        Mem_file = open(os.path.join("Samples", file))
+        prog = Mem_file.read()
+        Mem_file.close()
+        programs.append(prog)
         
-    with open(compare_file2, "r") as source:
-        codes = source.read()
-        tree2 = ast.parse(codes, mode="exec")
-
-    tree1 = NormFunctions(func=None).visit(tree1)
-    tree1 = NormIdentifiers().visit(tree1)
-    tree2 = NormFunctions(func=None).visit(tree2)
-    tree2 = NormIdentifiers().visit(tree2)
-
-    # subtree1 = field_check(tree1)
-    # subtree2 = field_check(tree2)
-
-    similarity = calculate_similarity_percentage(tree1, tree2)
-
-    print('Similarity: {:.2f}%'.format(similarity * 100))
+    base_file = []
+    Mem_file = open(os.path.join("Samples", base_file_name))
+    base = Mem_file.read()
+    Mem_file.close()
+    base_file.append(base)
+        
+    similarity1 = compare_multiple_files(base_file, programs)
+    similarity2 = afc.compare_many(base_file, programs)
+    
+    print('Base file is: ' + base_file_name)
+    print('Compare files: {}'.format(files))
+        
+    for num in enumerate(similarity1):
+        print('Method1 Similarity{}: {:.2f}%'.format(num[0]+1, num[1]))
+        
+    print('--------------------------------------------------')
+    for num in enumerate(similarity2):
+        print('Method2 Similarity{}: {:.2f}%'.format(num[0]+1, num[1]))
+    
+    show_plot(similarity1, similarity2, files, base_file_name)
 
 
 if __name__ == "__main__":
