@@ -15,7 +15,7 @@ pip3 install -r requirements.txt
 1. [x] Apply the sorting algorithm to sort the trees to compare step by step
 2. [x] Set up edit distance (Levenshtein distance) to compare the string and calculate similarity
 3. [x] K-means Clustering
-4. [ ] CUDA
+4. [ ] 
 
 ## Documentation
 + [AST](https://docs.python.org/3/library/ast.html#module-ast)
