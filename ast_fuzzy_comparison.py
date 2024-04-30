@@ -7,7 +7,6 @@ It uses abstract syntax trees from the built in module 'ast'.
 """
 
 import sys
-import reindent
 import ast
 from _ast import *
 
@@ -286,27 +285,12 @@ def compare_many(base: list, programs: list) -> list:
         result = compare_subtrees(subtrees1, subtrees2, 1000)[0]
         
         matrix.append(result * 100)
-    # for program_1_tree_num in range(0, len(tree_list)):
-    #     for program_2_tree_num in range(program_1_tree_num, len(tree_list)):
-    #         if program_1_tree_num == program_2_tree_num:
-    #             continue
-    #         # print(f'comparing {program_1_tree_num} to {program_2_tree_num}')
-
-    #         subtrees1 = tree_list[program_1_tree_num]
-    #         subtrees2 = tree_list[program_2_tree_num]
-
-    #         result = compare_subtrees(subtrees1, subtrees2, 1000)[0]
-
-    #         matrix.append((program_1_tree_num, program_2_tree_num, result * 100))
 
     return matrix
 
 
 def main(prog1, prog2):
     """Manual and direct comparison of programs."""
-    # prog1= "source1.py"
-    # prog2= "source2.py"
-
     with open(prog1, "r") as source:
         t1str = source.read()
         tree1 = ast.parse(t1str, mode="exec")
@@ -318,9 +302,5 @@ def main(prog1, prog2):
     subtree_list2 = get_significant_subtrees(tree2)
 
     similarity = compare_subtrees(subtree_list1, subtree_list2, 10000)[0]
-
-    # print(
-    #     f'The index of similarity between is: {similarity}'
-    # )
 
     return similarity

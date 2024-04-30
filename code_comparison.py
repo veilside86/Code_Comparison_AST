@@ -6,8 +6,9 @@ import random
 from _ast import *
 from Levenshtein import ratio
 
+import numpy as np
 import matplotlib.pyplot as plt
-import mplcursors
+from sklearn.cluster import KMeans
 
 class NormIdentifiers(ast.NodeTransformer):
     def __init__(self):
@@ -90,25 +91,27 @@ def calculate_similarity_percentage(tree_a: AST, tree_b: AST) -> float:
     return compare_subtree(tree_a, tree_b)
 
 
-def show_plot(x, y, file_names, base_file_name):
-    data = zip(x, y, file_names)
-    
+def show_plot(x, y, base_file_name):
+    data_points = list(zip(x, y))
+    num_clusters = 5
+    kmeans = KMeans(n_clusters=num_clusters)
+    kmeans.fit(data_points)
+    labels = kmeans.labels_
+
+    plt.figure(figsize=(8, 6))
+
+    for i in range(num_clusters):
+        cluster_points = np.array([data_points[j] for j in range(len(data_points)) if labels[j] == i])
+        plt.scatter(cluster_points[:, 0], cluster_points[:, 1], label=f'Cluster {i}')
+
     plt.xlim(0, 105)
     plt.ylim(0, 105)
     plt.title('Two AST Similarity')
     plt.xlabel("Similarity of Edit Distance Algorithm")
     plt.ylabel("Similarity of Munkres Algorithm")
     plt.gcf().text(0.02, 0.95, 'base file: {}'.format(base_file_name), fontsize=14)
-
-    for x_val, y_val, file_names in data:
-            if x_val >= 70 and y_val >= 70:
-                plt.scatter(x_val, y_val, s=50, c='#FF0000', marker="X", label = "70 < x")
-                plt.annotate(file_names, (x_val, y_val))
-            elif x_val <= 40 and y_val <= 40:
-                plt.scatter(x_val, y_val, c='#0000FF', marker="o", label = "x < 40")
-            else:
-                plt.scatter(x_val, y_val, c='#008000', marker="o", label = "40 < x < 70")
-            
+    plt.legend()
+    plt.grid(True)
     plt.show()
 
 
@@ -157,13 +160,13 @@ def main():
     print('Compare files: {}'.format(files))
         
     for num in enumerate(similarity1):
-        print('Method1 Similarity{}: {:.2f}%'.format(num[0]+1, num[1]))
+        print('Method1 Similarity_{}: {:.2f}%'.format(num[0]+1, num[1]))
         
     print('--------------------------------------------------')
     for num in enumerate(similarity2):
-        print('Method2 Similarity{}: {:.2f}%'.format(num[0]+1, num[1]))
+        print('Method2 Similarity_{}: {:.2f}%'.format(num[0]+1, num[1]))
     
-    show_plot(similarity1, similarity2, files, base_file_name)
+    show_plot(similarity1, similarity2, base_file_name)
 
 
 if __name__ == "__main__":
