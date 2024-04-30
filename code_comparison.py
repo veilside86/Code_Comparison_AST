@@ -156,15 +156,15 @@ def main():
     similarity1 = compare_multiple_files(base_file, programs)
     similarity2 = afc.compare_many(base_file, programs)
     
-    print('Base file is: ' + base_file_name)
-    print('Compare files: {}'.format(files))
+    # print('Base file is: ' + base_file_name)
+    # print('Compare files: {}'.format(files))
         
-    for num in enumerate(similarity1):
-        print('Method1 Similarity_{}: {:.2f}%'.format(num[0]+1, num[1]))
+    # for num in enumerate(similarity1):
+    #     print('Method1 Similarity_{}: {:.2f}%'.format(num[0]+1, num[1]))
         
-    print('--------------------------------------------------')
-    for num in enumerate(similarity2):
-        print('Method2 Similarity_{}: {:.2f}%'.format(num[0]+1, num[1]))
+    # print('--------------------------------------------------')
+    # for num in enumerate(similarity2):
+    #     print('Method2 Similarity_{}: {:.2f}%'.format(num[0]+1, num[1]))
     
     show_plot(similarity1, similarity2, base_file_name)
 
