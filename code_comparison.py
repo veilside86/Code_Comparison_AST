@@ -81,14 +81,10 @@ def compare_multiple_files(base: list, programs: list) -> list:
         subtrees1 = base
         subtrees2 = tree_list[program_tree_num]
 
-        similarity = calculate_similarity_percentage(subtrees1, subtrees2)
+        similarity = compare_subtree(subtrees1, subtrees2)
         result.append(similarity * 100)
             
     return result
-
-
-def calculate_similarity_percentage(tree_a: AST, tree_b: AST) -> float:
-    return compare_subtree(tree_a, tree_b)
 
 
 def show_plot(x, y, base_file_name):
