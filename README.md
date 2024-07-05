@@ -13,13 +13,14 @@ pip3 install -r requirements.txt
 
 ## To-Do List
 1. [x] Apply the sorting algorithm to sort the trees to compare step by step
-2. [x] Set up edit distance (Levenshtein distance) to compare the string and calculate similarity
-3. [x] K-means Clustering
+2. [x] Set up edit distance (Levenshtein distance) to compare the AST objects and calculate similarity
+3. [x] Set up munkres (Hungarian) algorithm
+4. [x] K-means Clustering to show similarity visually
 
 ## Documentation
 + [AST](https://docs.python.org/3/library/ast.html#module-ast)
-  - [Pyastism](https://github.com/jncraton/pyastsim)
-  - [Comparing Python Programs Using Abstract Syntax Trees](https://repositorio.uniandes.edu.co/bitstream/handle/1992/44754/u830947.pdf?sequence=1)
+  - [Munkres Module]([https://pypi.org/project/munkres/](https://software.clapper.org/munkres/))
   - [Levenshtein Module](https://rapidfuzz.github.io/Levenshtein/levenshtein.html#distance)
-+ [Edit distance algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance)
++ [Edit distance Algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance)
++ [Hungarian Algorithm](https://en.wikipedia.org/wiki/Hungarian_algorithm)
 + [Kmeans Clustering](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html)
