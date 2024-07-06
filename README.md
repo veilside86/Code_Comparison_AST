@@ -21,7 +21,7 @@ pip3 install -r requirements.txt
 
 ## Documentation
 + [AST](https://docs.python.org/3/library/ast.html#module-ast)
-  - [Munkres Module]([https://pypi.org/project/munkres/](https://software.clapper.org/munkres/))
+  - [Munkres Module](https://software.clapper.org/munkres/)
   - [Levenshtein Module](https://rapidfuzz.github.io/Levenshtein/levenshtein.html#distance)
 + [Edit distance Algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance)
 + [Hungarian Algorithm](https://en.wikipedia.org/wiki/Hungarian_algorithm)
