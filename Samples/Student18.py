@@ -1,4 +1,3 @@
-#Joshua Andrews
 fizz_divisor = 3
 buzz_divisor = 5
 for num in range(1, 101):

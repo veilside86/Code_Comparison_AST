@@ -1,4 +1,3 @@
-# Pascal Lluberes
 for number in range(1, 101, 1):
     # In this first if I want the program to print "FizzBuzz if the remainder of the number == 0 in both cases
     if int(number % 3) == 0 and int(number % 5) == 0:

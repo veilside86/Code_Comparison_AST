@@ -1,4 +1,4 @@
-# Kaleb McElroy PAL Session Quiz
+# PAL Session Quiz
 
 for n in range(101):
     if n in range(1, 101):

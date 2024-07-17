@@ -1,4 +1,3 @@
-#Luisa Pina 11.29.2022
 #Quiz #6
 #multiples of three fizz
 #multiples of five buzz
