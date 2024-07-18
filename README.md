@@ -1,7 +1,15 @@
 # Code comparison with AST
 This study aims to explore the potential of leveraging Python code analysis and Abstract Syntax Trees (AST) to detect cheating and plagiarism in programming assignments.
 
-![Add result here]()
+## Result
+- Compare with AI code
+
+![Figure_1](https://github.com/user-attachments/assets/c664c55d-2683-4eb3-abbc-b4e5035d585c)
+
+- Compare with Student code
+
+![Figure_2](https://github.com/user-attachments/assets/d8c4b9e0-84e2-4cb6-93d5-252911d9ca1d)
+
 
 ## install requirements packages
 > window
