@@ -112,19 +112,6 @@ def show_plot(x, y, base_file_name):
 
 
 def main():
-    """
-    Set up the path of the two files to compare
-    """
-    # For the mac
-    # compare_file1 = "JunseokSampleData/fizzbuzz1.py"
-    # compare_file2 = "JunseokSampleData/fizzbuzz2.py"
-
-    # for the Window
-    # compare_file1 = "source1.py"
-    # compare_file2 = "source2.py"
-    # comp1 = "JunseokSampleData/fizzbuzz1.py"
-    # comp2 = "JunseokSampleData/fizzbuzz2.py"
-    
     # for the multiple files
     path = 'Samples'
     files = []
@@ -151,16 +138,6 @@ def main():
         
     similarity1 = compare_multiple_files(base_file, programs)
     similarity2 = afc.compare_many(base_file, programs)
-    
-    # print('Base file is: ' + base_file_name)
-    # print('Compare files: {}'.format(files))
-        
-    # for num in enumerate(similarity1):
-    #     print('Method1 Similarity_{}: {:.2f}%'.format(num[0]+1, num[1]))
-        
-    # print('--------------------------------------------------')
-    # for num in enumerate(similarity2):
-    #     print('Method2 Similarity_{}: {:.2f}%'.format(num[0]+1, num[1]))
     
     show_plot(similarity1, similarity2, base_file_name)
 
